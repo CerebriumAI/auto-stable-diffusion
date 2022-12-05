@@ -1,12 +1,12 @@
-import os
 import random
+import sys
 
 from huggingface_hub import HfApi
 from huggingface_hub import create_repo
 
-HF_TOKEN = os.getenv("HUGGINGFACE_TOKEN", "")
-OUTPUT_DIR = os.getenv("OUTPUT_DIR", "")
-UUID = os.getenv("UUID", "")
+UUID = sys.argv[1]
+OUTPUT_DIR = sys.argv[2]
+HF_TOKEN = sys.argv[3]
 concept_name = UUID or f"session-{random.randrange(1, 10000)}"
 
 api = HfApi()

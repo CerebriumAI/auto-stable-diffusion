@@ -9,19 +9,18 @@ for UUID_folder in images/unprocessed/*/ ; do
     a=($(echo "$UUID_folder" | tr '/' '\n'))
     UUID=${a[2]}
 
-    export UUID=${UUID}
-    export MODEL_NAME="runwayml/stable-diffusion-v1-5"
-    export INSTANCE_DIR="images/unprocessed/${UUID}"
-    export OUTPUT_DIR="./weights/${UUID}"
-    export CLASS_DIR="./class-images"
-    export CLASS_TYPE="person"
-    export CKPT_FILE="$OUTPUT_DIR/model.ckpt"
+    HF_TOKEN=$(cat ~/.huggingface/token)
+    MODEL_NAME="runwayml/stable-diffusion-v1-5"
+    INSTANCE_DIR="images/unprocessed/${UUID}"
+    OUTPUT_DIR="./weights/${UUID}"
+    CLASS_DIR="./class-images"
+    CLASS_TYPE="person"
 
     FILE_COUNT=$(find "$UUID_folder" | wc -l)
 
     export NUM_TRAIN_STEPS=$((FILE_COUNT * 100))
 
-    echo "$FILE_COUNT"
+    echo "Number of images: $FILE_COUNT"
 
     if ((FILE_COUNT < 5)); then
       break
@@ -53,10 +52,8 @@ for UUID_folder in images/unprocessed/*/ ; do
   echo "Move unprocessed images to processed folder"
   mv images/unprocessed/"$UUID" images/processed/"$UUID"
 
-  echo "Convert model to single CKPT file"
-#  python diffusers/scripts/convert_diffusers_to_original_stable_diffusion.py --model_path "$OUTPUT_DIR/$NUM_TRAIN_STEPS"  --checkpoint_path "$CKPT_FILE"
-
-  echo "Upload CKPT file to Supabase"
+  echo "Push model to file to Huggingface"
+  python push_to_hub.py "$UUID" "$OUTPUT_DIR" "$HF_TOKEN"
 
   echo "Run inference"
   python infer.py "$UUID" "$CLASS_TYPE" "$NUM_TRAIN_STEPS"
