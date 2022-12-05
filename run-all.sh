@@ -1,5 +1,3 @@
-mkdir images images/processed images/unprocessed images/output
-
 echo "Download input images from Supabase"
 python download-images.py
 
