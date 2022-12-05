@@ -5,7 +5,7 @@ from storage3 import create_client as storage_client
 from supabase import create_client, Client
 
 url = "<SUPABSE_URL>"
-key = "<SUPABSE_ANON_KEY>"
+key = "<SUPABSE_SERVICE_ROLE>"
 headers = {"apiKey": key, "Authorization": f"Bearer {key}"}
 
 options = {"contentType": "image/png"}

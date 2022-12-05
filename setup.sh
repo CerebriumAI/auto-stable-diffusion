@@ -6,5 +6,7 @@ pip install storage3 supabase
 
 echo "2. Login to hugging face"
 mkdir -p ~/.huggingface
-export HUGGINGFACE_TOKEN="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"
+export HUGGINGFACE_TOKEN="<HF_TOKEN>"
 echo -n $HUGGINGFACE_TOKEN > ~/.huggingface/token
+
+echo "3. Done."

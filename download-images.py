@@ -4,7 +4,7 @@ from storage3 import create_client as create_storage_client
 from supabase import create_client, Client
 
 url = "<SUPABSE_URL>"
-key = "<SUPABSE_ANON_KEY>"
+key = "<SUPABSE_SERVICE_ROLE>"
 headers = {"apiKey": key, "Authorization": f"Bearer {key}"}
 
 # pass in is_async=True to create an async client
